@@ -3,7 +3,6 @@ import { Box, Typography, Button, TextField, Select, MenuItem, Stack, ThemeProvi
 import theme from './theme';
 import './App.css';
 
-// Move these constants outside the component to prevent recreation on each render
 const PERCENTAGE_OPTIONS = [60, 65, 70, 75, 80, 85, 90];
 const GIFS = {
   "attend-gif": Array.from({ length: 10 }, (_, i) => `giphy${i + 1}.gif`),
@@ -37,7 +36,7 @@ const App = () => {
 
   const getRandomGif = useCallback((folder) => {
     const randomIndex = Math.floor(Math.random() * GIFS[folder].length);
-    return `/gif/${folder}/${GIFS[folder][randomIndex]}`;
+    return `src/assets/gif/${folder}/${GIFS[folder][randomIndex]}`;
   }, []);
 
   const getRandomSentence = useCallback((sentences, replacements) => {
@@ -76,8 +75,8 @@ const App = () => {
       <CssBaseline />
       <Box sx={{ textAlign: "center" }}>
         <Typography variant="body1" mt={2} mb={5}>bunkmate.</Typography>
-        <Typography variant="h5" mb={5} sx={{ color: 'gray' }}>
-          Calculate your perfect BUNK STREAK!
+        <Typography variant="h4" mb={5} sx={{ color: 'gray' }}>
+          Perfect your bunking strategy!
         </Typography>
 
         <Stack spacing={4} maxWidth="400px" mx="auto">
