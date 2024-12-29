@@ -1,5 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Box, Typography, Button, TextField, Select, MenuItem, Stack, ThemeProvider, CssBaseline, Tooltip, } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  Stack,
+  ThemeProvider,
+  CssBaseline,
+  Tooltip,
+} from "@mui/material";
 import theme from "./theme.min.js";
 import "./App.css";
 
@@ -36,30 +47,47 @@ const App = () => {
   const [preloadedGifs, setPreloadedGifs] = useState({});
   const [gif, setGif] = useState("");
 
-  // Preload GIFs into memory
+  // Preload the first GIF of each category
   useEffect(() => {
-    const preloadAllGifs = () => {
+    const preloadFirstGifs = () => {
       const gifStore = {};
       Object.entries(GIFS).forEach(([folder, paths]) => {
-        gifStore[folder] = paths.map((path) => {
-          const img = new Image();
-          img.src = path;
-          return img;
-        });
+        const img = new Image();
+        img.src = paths[0];
+        gifStore[folder] = [img];
       });
       setPreloadedGifs(gifStore);
     };
 
-    preloadAllGifs();
+    preloadFirstGifs();
   }, []);
 
-  const getRandomGif = useCallback((folder) => {
-    if (preloadedGifs[folder] && preloadedGifs[folder].length > 0) {
-      const randomIndex = Math.floor(Math.random() * preloadedGifs[folder].length);
-      return preloadedGifs[folder][randomIndex].src;
+  const lazyLoadGifs = useCallback((folder) => {
+    if (!preloadedGifs[folder] || preloadedGifs[folder].length === 1) {
+      const additionalGifs = GIFS[folder].slice(1).map((path) => {
+        const img = new Image();
+        img.src = path;
+        return img;
+      });
+      setPreloadedGifs((prev) => ({
+        ...prev,
+        [folder]: [...(prev[folder] || []), ...additionalGifs],
+      }));
     }
-    return ""; // Fallback if no GIFs are loaded
   }, [preloadedGifs]);
+
+  const getRandomGif = useCallback(
+    (folder) => {
+      lazyLoadGifs(folder);
+      const gifs = preloadedGifs[folder];
+      if (gifs && gifs.length > 0) {
+        const randomIndex = Math.floor(Math.random() * gifs.length);
+        return gifs[randomIndex].src;
+      }
+      return ""; // Fallback if no GIFs are loaded
+    },
+    [preloadedGifs, lazyLoadGifs]
+  );
 
   const getRandomSentence = useCallback((sentences, replacements) => {
     const sentence = sentences[Math.floor(Math.random() * sentences.length)];
