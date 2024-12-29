@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'GoogleSans';
+  src: url('/src/assets/GoogleSans-Regular.woff2') format('woff2');
+  font-display: fallback;
+}
+
+/* Global styling */
+body {
+  font-family: 'GoogleSans', 'Roboto', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#root {
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 16px; /* Add padding for spacing */
+}
