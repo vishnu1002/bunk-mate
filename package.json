@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "author": "vishnu1002",
-  "homepage": "https://bunkmate.pages.dev/",
+  "homepage": "https://thebunkmate.pages.dev/",
   "type": "module",
   "scripts": {
     "dev": "vite",
