@@ -5,8 +5,8 @@ import './App.css';
 
 const PERCENTAGE_OPTIONS = [60, 65, 70, 75, 80, 85, 90];
 const GIFS = {
-  "attend-gif": Array.from({ length: 10 }, (_, i) => `giphy${i + 1}.gif`),
-  "bunk-gif": Array.from({ length: 10 }, (_, i) => `giphy${i + 1}.gif`),
+  "attend-gif": Array.from({ length: 10 }, (_, i) => `giphy${i + 1}.webp`),
+  "bunk-gif": Array.from({ length: 10 }, (_, i) => `giphy${i + 1}.webp`),
 };
 
 const BUNK_SENTENCES = [
