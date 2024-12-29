@@ -10,7 +10,6 @@
   font-display: fallback;
 }
 
-/* Global styling */
 body {
   font-family: 'GoogleSans', 'Roboto', sans-serif;
   min-height: 100vh;
@@ -26,5 +25,25 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 16px; /* Add padding for spacing */
+  padding: 16px;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+:focus {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
+}
+
+img {
+  will-change: transform;
 }
