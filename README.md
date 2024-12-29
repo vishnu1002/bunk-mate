@@ -22,7 +22,7 @@
 
 # 🚀 Deployment
 - fusecolor is deployed using [Cloudflare Pages](https://pages.cloudflare.com/). 
-- Visit the deployment page [thebunkmate.pages.dev/](https://thebunkmate.pages.dev/) to access the live version of the application.
+- Visit the deployment page [thebunkmate.pages.dev/](https://thebunkmate.pages.dev) to access the live version of the application.
 
 ## 🖥️ Local Setup:
 
