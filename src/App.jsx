@@ -36,7 +36,7 @@ const App = () => {
 
   const getRandomGif = useCallback((folder) => {
     const randomIndex = Math.floor(Math.random() * GIFS[folder].length);
-    return `src/assets/gif/${folder}/${GIFS[folder][randomIndex]}`;
+    return `/gif/${folder}/${GIFS[folder][randomIndex]}`;
   }, []);
 
   const getRandomSentence = useCallback((sentences, replacements) => {
