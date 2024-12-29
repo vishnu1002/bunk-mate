@@ -1,27 +1,13 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, Stack, ThemeProvider, CssBaseline, Tooltip, } from "@mui/material";
 import theme from "./theme.min.js";
 import "./App.css";
 
 const PERCENTAGE_OPTIONS = [60, 65, 70, 75, 80, 85, 90];
 
-// Preload images
-const preloadImages = (images) => {
-  images.forEach((src) => {
-    const img = new Image();
-    img.src = src;
-  });
-};
-
 const GIFS = {
-  "attend-gif": Array.from(
-    { length: 10 },
-    (_, i) => `/gif/attend-gif/giphy${i + 1}.webp`
-  ),
-  "bunk-gif": Array.from(
-    { length: 10 },
-    (_, i) => `/gif/bunk-gif/giphy${i + 1}.webp`
-  ),
+  "attend-gif": Array.from({ length: 10 }, (_, i) => `/gif/attend-gif/giphy${i + 1}.webp`),
+  "bunk-gif": Array.from({ length: 10 }, (_, i) => `/gif/bunk-gif/giphy${i + 1}.webp`),
 };
 
 const BUNK_SENTENCES = [
@@ -47,17 +33,33 @@ const App = () => {
   const [present, setPresent] = useState("");
   const [total, setTotal] = useState("");
   const [percentage, setPercentage] = useState(75);
+  const [preloadedGifs, setPreloadedGifs] = useState({});
   const [gif, setGif] = useState("");
 
-  // Preload GIFs
+  // Preload GIFs into memory
   useEffect(() => {
-    Object.values(GIFS).forEach(preloadImages);
+    const preloadAllGifs = () => {
+      const gifStore = {};
+      Object.entries(GIFS).forEach(([folder, paths]) => {
+        gifStore[folder] = paths.map((path) => {
+          const img = new Image();
+          img.src = path;
+          return img;
+        });
+      });
+      setPreloadedGifs(gifStore);
+    };
+
+    preloadAllGifs();
   }, []);
 
   const getRandomGif = useCallback((folder) => {
-    const randomIndex = Math.floor(Math.random() * GIFS[folder].length);
-    return GIFS[folder][randomIndex];
-  }, []);
+    if (preloadedGifs[folder] && preloadedGifs[folder].length > 0) {
+      const randomIndex = Math.floor(Math.random() * preloadedGifs[folder].length);
+      return preloadedGifs[folder][randomIndex].src;
+    }
+    return ""; // Fallback if no GIFs are loaded
+  }, [preloadedGifs]);
 
   const getRandomSentence = useCallback((sentences, replacements) => {
     const sentence = sentences[Math.floor(Math.random() * sentences.length)];
@@ -171,18 +173,13 @@ const App = () => {
           </form>
         </Stack>
 
-        {result && (
-          <Typography variant="h6" sx={{ mt: 2 }}>
-            {result}
-          </Typography>
-        )}
+        {result && <Typography variant="h6" sx={{ mt: 2 }}>{result}</Typography>}
         {gif && (
           <Box sx={{ mt: 4 }}>
             <img
               src={gif}
               alt="Result GIF"
               style={{ maxWidth: "250px" }}
-              loading="lazy"
             />
           </Box>
         )}
@@ -196,18 +193,16 @@ const App = () => {
           right: 18,
         }}
       >
-        <Typography variant="body">view bunkmate. on </Typography>
+        <Typography variant="body">
+          view bunkmate. on{" "}
+        </Typography>
         <Typography
           variant="body"
           component="a"
           href="https://github.com/vishnu1002/bunk-mate"
           target="_blank"
           rel="noopener noreferrer"
-          sx={{
-            fontSize: "13px",
-            color: "#eeeeee",
-            textDecoration: "underline",
-          }}
+          sx={{ fontSize: "13px", color: "#eeeeee", textDecoration: "underline" }}
         >
           Github
         </Typography>
