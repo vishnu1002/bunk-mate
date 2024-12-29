@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import { Box, Typography, Button, TextField, Select, MenuItem, Stack, ThemeProvider, CssBaseline, Tooltip } from '@mui/material';
-import theme from './theme';
+import theme from './theme.min.js';
 import './App.css';
 
 const PERCENTAGE_OPTIONS = [60, 65, 70, 75, 80, 85, 90];
@@ -83,6 +83,8 @@ const App = () => {
           <form onSubmit={calculate}>
             <Stack spacing={2}>
               <Select
+                aria-label="select-percentage"
+                id="select-percentage"
                 fullWidth
                 value={percentage}
                 onChange={(e) => setPercentage(e.target.value)}
@@ -94,6 +96,8 @@ const App = () => {
               </Select>
               <Tooltip title="Total number of classes conducted till now">
                 <TextField
+                  aria-label="classes-attended"
+                  id="classes-attended"
                   label="Classes Attended"
                   variant="outlined"
                   value={present}
@@ -104,6 +108,8 @@ const App = () => {
               </Tooltip>
               <Tooltip title="Total number of classes taken so far">
                 <TextField
+                  aria-label="total-classes"
+                  id="total-classes"
                   label="Total Classes"
                   variant="outlined"
                   value={total}
@@ -112,7 +118,7 @@ const App = () => {
                   type="number"
                 />
               </Tooltip>
-              <Button type="submit" variant="contained" color="primary">
+              <Button type="submit" variant="contained" color="primary" id="calculate-btn" aria-label="calculate-btn">
                 Calculate
               </Button>
             </Stack>
