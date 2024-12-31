@@ -17,8 +17,14 @@ import "./App.css";
 const PERCENTAGE_OPTIONS = [60, 65, 70, 75, 80, 85, 90];
 
 const GIFS = {
-  "attend-gif": Array.from({ length: 10 }, (_, i) => `/gif/attend-gif/giphy${i + 1}.webp`),
-  "bunk-gif": Array.from({ length: 10 }, (_, i) => `/gif/bunk-gif/giphy${i + 1}.webp`),
+  "attend-gif": Array.from(
+    { length: 10 },
+    (_, i) => `/gif/attend-gif/giphy${i + 1}.webp`
+  ),
+  "bunk-gif": Array.from(
+    { length: 10 },
+    (_, i) => `/gif/bunk-gif/giphy${i + 1}.webp`
+  ),
 };
 
 const BUNK_SENTENCES = [
@@ -62,19 +68,22 @@ const App = () => {
     preloadFirstGifs();
   }, []);
 
-  const lazyLoadGifs = useCallback((folder) => {
-    if (!preloadedGifs[folder] || preloadedGifs[folder].length === 1) {
-      const additionalGifs = GIFS[folder].slice(1).map((path) => {
-        const img = new Image();
-        img.src = path;
-        return img;
-      });
-      setPreloadedGifs((prev) => ({
-        ...prev,
-        [folder]: [...(prev[folder] || []), ...additionalGifs],
-      }));
-    }
-  }, [preloadedGifs]);
+  const lazyLoadGifs = useCallback(
+    (folder) => {
+      if (!preloadedGifs[folder] || preloadedGifs[folder].length === 1) {
+        const additionalGifs = GIFS[folder].slice(1).map((path) => {
+          const img = new Image();
+          img.src = path;
+          return img;
+        });
+        setPreloadedGifs((prev) => ({
+          ...prev,
+          [folder]: [...(prev[folder] || []), ...additionalGifs],
+        }));
+      }
+    },
+    [preloadedGifs]
+  );
 
   const getRandomGif = useCallback(
     (folder) => {
@@ -151,7 +160,7 @@ const App = () => {
           <form onSubmit={calculate}>
             <Stack spacing={2}>
               <Select
-                aria-label="select-percentage"
+                aria-labelledby="select-percentage-label"
                 id="select-percentage"
                 fullWidth
                 value={percentage}
@@ -164,9 +173,9 @@ const App = () => {
                   </MenuItem>
                 ))}
               </Select>
-              <Tooltip title="Total number of classes conducted till now">
+              <Tooltip title="Total number of classes you have attended">
                 <TextField
-                  aria-label="classes-attended"
+                  aria-label="Number of classes attended"
                   id="classes-attended"
                   label="Classes Attended"
                   variant="outlined"
@@ -176,9 +185,9 @@ const App = () => {
                   type="number"
                 />
               </Tooltip>
-              <Tooltip title="Total number of classes taken so far">
+              <Tooltip title="Total number of classes held so far">
                 <TextField
-                  aria-label="total-classes"
+                  aria-label="Total number of classes held"
                   id="total-classes"
                   label="Total Classes"
                   variant="outlined"
@@ -201,14 +210,14 @@ const App = () => {
           </form>
         </Stack>
 
-        {result && <Typography variant="h6" sx={{ mt: 2 }}>{result}</Typography>}
+        {result && (
+          <Typography variant="h6" sx={{ mt: 2 }}>
+            {result}
+          </Typography>
+        )}
         {gif && (
           <Box sx={{ mt: 4 }}>
-            <img
-              src={gif}
-              alt="Result GIF"
-              style={{ maxWidth: "250px" }}
-            />
+            <img src={gif} alt="Result GIF" style={{ maxWidth: "250px" }} />
           </Box>
         )}
       </Box>
@@ -221,16 +230,18 @@ const App = () => {
           right: 18,
         }}
       >
-        <Typography variant="body">
-          view bunkmate. on{" "}
-        </Typography>
+        <Typography variant="body">view bunkmate. on </Typography>
         <Typography
           variant="body"
           component="a"
           href="https://github.com/vishnu1002/bunk-mate"
           target="_blank"
           rel="noopener noreferrer"
-          sx={{ fontSize: "13px", color: "#eeeeee", textDecoration: "underline" }}
+          sx={{
+            fontSize: "13px",
+            color: "#eeeeee",
+            textDecoration: "underline",
+          }}
         >
           Github
         </Typography>
