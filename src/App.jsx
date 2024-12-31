@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import theme from "./theme.min.js";
 import "./App.css";
+import { color } from "@mui/system";
 
 const PERCENTAGE_OPTIONS = [60, 65, 70, 75, 80, 85, 90];
 
@@ -155,12 +156,12 @@ const App = () => {
         <Typography variant="h4" mb={5} sx={{ color: "gray" }}>
           Perfect your bunking strategy!
         </Typography>
-
         <Stack spacing={4} maxWidth="400px" mx="auto">
           <form onSubmit={calculate}>
             <Stack spacing={2}>
+              <Typography id="select-percentage-label">Preferred Percentage</Typography>
               <Select
-                aria-labelledby="select-percentage-label"
+                labelId="select-percentage-label"
                 id="select-percentage"
                 fullWidth
                 value={percentage}
@@ -175,7 +176,6 @@ const App = () => {
               </Select>
               <Tooltip title="Total number of classes you have attended">
                 <TextField
-                  aria-label="Number of classes attended"
                   id="classes-attended"
                   label="Classes Attended"
                   variant="outlined"
@@ -187,7 +187,6 @@ const App = () => {
               </Tooltip>
               <Tooltip title="Total number of classes held so far">
                 <TextField
-                  aria-label="Total number of classes held"
                   id="total-classes"
                   label="Total Classes"
                   variant="outlined"
